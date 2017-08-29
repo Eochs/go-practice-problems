@@ -7,13 +7,15 @@ import (
 )
 
 func main() {
-	l1 := ListNode{2,
-		&ListNode{4,
-			&ListNode{3, nil}}}
+	// l1 := ListNode{2,
+	// 	&ListNode{4,
+	// 		&ListNode{3, nil}}}
+	l1 := *convertIntToList(342)
 
-	l2 := ListNode{5,
-		&ListNode{6,
-			&ListNode{4, nil}}}
+	// l2 := ListNode{5,
+	// 	&ListNode{6,
+	// 		&ListNode{4, nil}}}
+	l2 := *convertIntToList(465)
 
 	l3 := addTwoNumbers(&l1, &l2)
 	fmt.Printf(l3.String())
@@ -76,3 +78,7 @@ func (l *ListNode) String() string {
 	}
 	return acc + strconv.Itoa(l.Val) + "\n"
 }
+
+// func makeArrIntoList(arr []int) *ListNode {
+
+// }
