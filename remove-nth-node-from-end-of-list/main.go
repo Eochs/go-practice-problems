@@ -12,30 +12,30 @@ type ListNode struct {
 }
 
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
-	runnerToFindEnd := head
+	dummyHead := &ListNode{}
+	dummyHead.Next = head
+	runnerToFindEnd := dummyHead
 	// move n Nodes in
-	for i := 0; i < n; i++ {
-		if runnerToFindEnd.Next == nil {
-			return head // too small to remove n
-		}
+	for ith := 1; ith <= n+1; ith++ {
 		runnerToFindEnd = runnerToFindEnd.Next
 	}
-	runnerTrailingByN := head // follow n steps behind first runner
-	for runnerToFindEnd.Next != nil {
+	runnerTrailingByN := dummyHead // follow n steps behind first runner
+	for runnerToFindEnd != nil {
 		runnerToFindEnd = runnerToFindEnd.Next
 		runnerTrailingByN = runnerTrailingByN.Next
 	}
 	// next node is one to be removed
-	temp := runnerTrailingByN.Next
-	runnerTrailingByN.Next = temp.Next
-	temp.Next = nil // unnatach for GC
-	return head
+
+	runnerTrailingByN.Next = runnerTrailingByN.Next.Next
+
+	return dummyHead.Next
 }
 
 func main() {
 	// Given linked list: 1->2->3->4->5, and n = 2.
 	// After removing the second node from the end, the linked list becomes 1->2->3->5.
-	l := &ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, &ListNode{5, nil}}}}}
+	// l := &ListNode{1, &ListNode{2, &ListNode{3, &ListNode{4, &ListNode{5, nil}}}}}
+	l := &ListNode{1, &ListNode{2, nil}}
 	newlist := removeNthFromEnd(l, 2)
 	fmt.Println(newlist.String())
 }
